@@ -3,11 +3,13 @@ from server.main import Server
 from main import Terminal
 
 servr = Server(["Cebu", "Manila", "Labangon"]) # INITIALIZE SERVER
+servr.create_valid_card("test") # SAMPLE CREATION OF CARD, STARTS WITH 0 BALANCE
+servr.load_card("test", 200) # SAMPLE CARD LOADING
 servr.destinations # SAMPLE QUERRY TO SERVER
 termnal = Terminal(servr, 5) # SET THE SERVER TO BE USED ON THE MACHINE/TERMINAL
 termnal.select_destination("Metro") # SAMPLE INTERACTION TO MACHINE/TERMINAL
 termnal.select_destination("Cebu")
-servr.remove_train("Manila")
+servr.remove_trains("Manila") # SAMPLE REMOVAL OF AVAILABLE TRAIN
 servr.destinations 
 termnal.select_destination("Manila")
 termnal.check_train_availability()

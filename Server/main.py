@@ -21,7 +21,7 @@ class Server:
             raise TypeError('Argument "destinaitons" is type: ' +type(destinations) +'. Must be a list of strings, try enclosing with "[]"')
 
     def create_valid_card(self, fname: str):
-        """Generates .nfo file which emulates a card containing actual data
+        """Generates .nfo file which emulates a card containing actual data. Starts with 0 Balance
 
         Args:
             fname (str): Name of the file.
@@ -42,7 +42,7 @@ class Server:
         f.close
 
     def card_is_valid(self, nfo_binary: str) -> bool:
-        """Checks for validity of a card.
+        """Checks for validity of a card. 
 
         Args:
             nfo_binary (str): This refers to the data inside the card (.nfo). Note: pass the data inside .nfo not the filename. 
@@ -120,8 +120,8 @@ class Server:
     def add_train(self, destination: str):
         self.destinations[destination] += 1
 
-    def remove_train(self, destination: str):
-        self.destinations[destination] -= 1
+    def remove_trains(self, destination: str):
+        self.destinations[destination] = 0
 
     def train_is_available(self, destination: str) -> bool:
         return True if self.destinations[destination] else False
