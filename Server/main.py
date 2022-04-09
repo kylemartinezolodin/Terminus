@@ -3,6 +3,8 @@ import json
 
 #DestDictFormat = dict[str, int] # THIS IS A TYPE HINT, READ MORE:https://docs.python.org/3/library/typing.html
 class Server:
+    """A class emlating the server which terminals communicate for querry destinations, train and other company authorized modifications to smart cards"""
+
     destinations: Dict[str, int] = {} # EMULATES DATABASE OF DESTINATIONS AND AVAILABLE TRAINS, INSERT PREDEFINED DESTINAITONS AND NUMBER OF AVAILABLE TRAINS
 
     def __init__(self, destinations:List[str] = None) -> None:
@@ -13,8 +15,10 @@ class Server:
         if type(destinations) is list:
             for dest in destinations:
                 self.destinations.update({dest: 1})
+        elif destinations == None:
+            pass
         else:
-            raise TypeError('Must be a list data-type, try enclosing with "[]"')
+            raise TypeError('Argument "destinaitons" is type: ' +type(destinations) +'. Must be a list of strings, try enclosing with "[]"')
 
     def create_valid_card(self, fname: str):
         """Generates .nfo file which emulates a card containing actual data
@@ -23,7 +27,7 @@ class Server:
             fname (str): Name of the file.
         """
         if fname.count("."): # IF fname HAS PERIOD OR EXTENTION (".txt")
-            fname = fname[:fname.count(".")] # REMOVE EXTENTION
+            fname = fname[:fname.find(".")] # REMOVE EXTENTION
         f = open(fname +".nfo", "w")
         
         data = {
@@ -48,6 +52,7 @@ class Server:
         """
         
         # SOME DECRYPTION TO "nfo_binary"...
+        card = None
         try:
             card = json.loads(nfo_binary)
         except: # RETURN FALSE IF CANNOT BE LOADED
@@ -65,7 +70,7 @@ class Server:
             bool: Returns True if success, otherwise False
         """
         if fname.count("."): # IF fname HAS PERIOD OR EXTENTION (".txt")
-            fname = fname[:fname.count(".")] # REMOVE EXTENTION
+            fname = fname[:fname.find(".")] # REMOVE EXTENTION
 
         f = open(fname +".nfo", "r+")
         nfo_binary = f.read()
@@ -92,7 +97,7 @@ class Server:
 
     def invalidate_card(self, fname: str):
         if fname.count("."): # IF fname HAS PERIOD OR EXTENTION (".txt")
-            fname = fname[:fname.count(".")] # REMOVE EXTENTION
+            fname = fname[:fname.find(".")] # REMOVE EXTENTION
         f = open(fname +".nfo", "r+")
 
         nfo_binary = f.read()
