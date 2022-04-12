@@ -37,7 +37,7 @@ class Terminal:
         self.selected_destination = ""
         self.destination_fare = 0
         self.card = ""
-        return True
+        return True if self.selected_destination == "" and self.destination_fare == 0 and self.card == "" else False # VALIDATION
 
     def insert_card(self, fname: str) -> bool:
         if fname.count("."): # IF fname HAS PERIOD OR EXTENTION (".txt")
@@ -75,14 +75,17 @@ class Terminal:
         # SOME DECRYPTION ...
 
         card = json.loads(card_ic.read())
+        previous_balance = card["Balance"] 
         card["Balance"] -= self.destination_fare
 
-        # SOME ENCRYPTION ...
-        card_ic.truncate(0) # CLEAR BINARY DATA
-        card_ic.seek(0, 0) # RESET CURSOR
-        card_ic.write(json.dumps(card))
-        card_ic.close()
-        return True
+        if previous_balance - self.destination_fare == card["Balance"]: # VALIDATION
+            # SOME ENCRYPTION ...
+            card_ic.truncate(0) # CLEAR BINARY DATA
+            card_ic.seek(0, 0) # RESET CURSOR
+            card_ic.write(json.dumps(card))
+            card_ic.close()
+            return True
+        return False
     
     def refund_card(self) -> bool:
         # ASSUMES CARD IS INSERTED
@@ -93,7 +96,7 @@ class Terminal:
 
     def return_card(self) -> bool:
         self.card = "" # EMULATED EJECTION
-        return True if self.card == "" else False
+        return True if self.card == "" else False # VALIDATION
 
     def print_reciept_ticket(self) -> bool:
         if self.paper > 0:
