@@ -1,3 +1,4 @@
+from operator import truediv
 from server.main import Server 
 from pathlib import Path
 import secrets
@@ -87,6 +88,8 @@ class Terminal:
             card_ic.seek(0, 0) # RESET CURSOR
             card_ic.write(json.dumps(card))
             card_ic.close()
+
+            self.hasPaid = True
             return True
         return False
     
