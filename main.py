@@ -11,6 +11,7 @@ class Terminal:
     paper: int # EMAULATES PAPER FOR PRINTING, THIS PROPERTY ACCOUNTS N TRANSACTIONS CAN BE COMPLETED UNTIL PAPER RUNS OUT
     selected_destination: str
     destination_fare: int # MAXIMUM VALUE OF 150
+    hasPaid: bool
     
     def __init__(self, server: Server = Server(), paper: int = 10) -> None:
         self.main_server = server
@@ -18,6 +19,7 @@ class Terminal:
         self.selected_destination = ""
         self.card = ""
         self.destination_fare = 0
+        self.hasPaid = False
 
     def select_destination(self, destination: str) -> bool:
         if destination in self.main_server.destinations:
@@ -37,7 +39,8 @@ class Terminal:
         self.selected_destination = ""
         self.destination_fare = 0
         self.card = ""
-        return True if self.selected_destination == "" and self.destination_fare == 0 and self.card == "" else False # VALIDATION
+        self.hasPaid = False
+        return True if self.selected_destination == "" and self.destination_fare == 0 and self.card == ""  and self.hasPaid == False else False # VALIDATION
 
     def insert_card(self, fname: str) -> bool:
         if fname.count("."): # IF fname HAS PERIOD OR EXTENTION (".txt")
@@ -99,7 +102,7 @@ class Terminal:
         return True if self.card == "" else False # VALIDATION
 
     def print_reciept_ticket(self) -> bool:
-        if self.paper > 0:
+        if self.hasPaid and self.paper > 0:
             self.paper -= 1 # EMULATED PRINT
             return True
         return False
