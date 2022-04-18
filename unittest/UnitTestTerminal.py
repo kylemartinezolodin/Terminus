@@ -173,12 +173,14 @@ class TestTerminal(unittest.TestCase):
             # a2. Is the receipt/ticket printed?
             a2 = termnal.print_reciept_ticket()
             self.assertEqual(a2, False)
-            # a3. The card is returned.
-            a3 = termnal.return_card()
-            self.assertEqual(a3, True)
-            # a4. The terminal is reseted.
-            a4 = termnal.reset()
+            # a3. The debited amount is refunded.
+            a3 = termnal.refund_card()
+            # a4. The card is returned.
+            a4 = termnal.return_card()
             self.assertEqual(a4, True)
+            # a5. The terminal is reseted.
+            a5 = termnal.reset()
+            self.assertEqual(a5, True)
 
 
 if __name__ == '__main__':
