@@ -1,5 +1,5 @@
 from operator import truediv
-from server.main import Server 
+from Server.main import Server 
 from pathlib import Path
 import secrets
 import json

@@ -1,5 +1,8 @@
 # THIS SCRIPT IS A QUICK SAMPLE ON HOW TO RUN THE PROJECT, IT IS RECOMENDED TO PASTE EACH LINE TO PYTHON'S INTERACTIVE SHELL
-from server.main import Server
+import sys
+sys.path.append('../')
+
+from Server.main import Server
 from main import Terminal
 
 servr = Server(["Cebu", "Manila", "Labangon"]) # INITIALIZE SERVER
